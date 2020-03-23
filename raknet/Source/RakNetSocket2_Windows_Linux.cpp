@@ -29,10 +29,11 @@ void PrepareAddrInfoHints2(addrinfo *hints)
 void GetMyIP_Windows_Linux_IPV4And6( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTERNAL_IDS] )
 {
 	int idx=0;
-	char ac[ 80 ];
+	char ac[ 80 ] = "localhost";
+#ifndef __NX
 	int err = gethostname( ac, sizeof( ac ) );
 	RakAssert(err != -1);
-	
+#endif
 	struct addrinfo hints;
 	struct addrinfo *servinfo=0, *aip;  // will point to the results
 	PrepareAddrInfoHints2(&hints);
@@ -73,11 +74,12 @@ void GetMyIP_Windows_Linux_IPV4( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTER
 
 
 	int idx=0;
-	char ac[ 80 ];
+	char ac[ 80 ] = "localhost";
+#ifndef __NX
 	int err = gethostname( ac, sizeof( ac ) );
     (void) err;
 	RakAssert(err != -1);
-	
+#endif	
 	struct hostent *phe = gethostbyname( ac );
 
 	if ( phe == 0 )
