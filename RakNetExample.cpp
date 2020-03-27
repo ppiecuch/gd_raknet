@@ -95,9 +95,9 @@ String RakNetExample::getMessageIdentifier(unsigned char id_)
 
 void RakNetExample::_bind_methods()
 {
-	ClassDB::bind_method("startup", &RakNetExample::startup);
-	ClassDB::bind_method("shutdown", &RakNetExample::shutdown);
-	ClassDB::bind_method("listen", &RakNetExample::listen);
-	ClassDB::bind_method("connect", &RakNetExample::connect);
-	ClassDB::bind_method("receive_packets", &RakNetExample::receivePackets);
+	ClassDB::bind_method("rk_startup", &RakNetExample::startup);
+	ClassDB::bind_method("rk_shutdown", &RakNetExample::shutdown);
+	ClassDB::bind_method("rk_listen", &RakNetExample::listen);
+	ClassDB::bind_method("rk_connect", &RakNetExample::connect);
+	ClassDB::bind_method("rk_receive_packets", &RakNetExample::receivePackets);
 }
