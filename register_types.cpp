@@ -3,7 +3,7 @@
 
 void register_gd_raknet_types()
 {
-		ClassDB::register_class<RakNetExample>();
+    ClassDB::register_class<RakNetExample>();
 }
 
 void unregister_gd_raknet_types() {

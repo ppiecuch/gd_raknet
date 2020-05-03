@@ -1,6 +1,15 @@
-Import('env')
+#!/usr/bin/env python
 
-env.add_source_files(env.modules_sources,"raknet/Source/*.cpp")
-env.add_source_files(env.modules_sources,"*.cpp")
-# Don't know a better way of doing this, but it works
-env.Append(CPPFLAGS=["-Imodules/gd_raknet/raknet/Source"])
+Import('env')
+Import('env_modules')
+
+env_module = env_modules.Clone()
+env_module.Append(CPPPATH=[".", "raknet/Source"])
+
+sources = Glob("*.cpp")
+sources += Glob("raknet/Source/*.cpp")
+
+# Compile as a static library
+lib = env_module.Library("gd_raknet", sources)
+# Add the library as a dependency of the final executable
+env.Prepend(LIBS=[lib])
