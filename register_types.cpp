@@ -1,8 +1,7 @@
 #include "register_types.h"
 #include "RakNetExample.h"
 
-void register_gd_raknet_types()
-{
+void register_gd_raknet_types() {
     ClassDB::register_class<RakNetExample>();
 }
 

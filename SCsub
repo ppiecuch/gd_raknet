@@ -1,7 +1,10 @@
 #!/usr/bin/env python
+import os
 
 Import('env')
 Import('env_modules')
+
+module = os.path.splitext(os.path.basename(os.path.realpath(".")))[0]
 
 env_module = env_modules.Clone()
 env_module.Append(CPPPATH=[".", "raknet/Source"])
@@ -10,6 +13,6 @@ sources = Glob("*.cpp")
 sources += Glob("raknet/Source/*.cpp")
 
 # Compile as a static library
-lib = env_module.Library("gd_raknet", sources)
+lib = env_module.Library(module, sources)
 # Add the library as a dependency of the final executable
 env.Prepend(LIBS=[lib])
