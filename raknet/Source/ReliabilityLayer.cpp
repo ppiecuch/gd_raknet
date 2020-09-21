@@ -1693,15 +1693,17 @@ void ReliabilityLayer::Update( RakNetSocket2 *s, SystemAddress &systemAddress, i
 {
 	(void) MTUSize;
 
-	RakNet::TimeMS timeMs;
 #if CC_TIME_TYPE_BYTES==4
 	time/=1000;
+#endif
+
+#ifdef _DEBUG
+	RakNet::TimeMS timeMs;
+#if CC_TIME_TYPE_BYTES==4
 	timeMs=time;
 #else
 	timeMs=(RakNet::TimeMS) (time/(CCTimeType)1000);
 #endif
-
-#ifdef _DEBUG
 	while (delayList.Size())
 	{
 		if (delayList.Peek()->sendTime <= timeMs)

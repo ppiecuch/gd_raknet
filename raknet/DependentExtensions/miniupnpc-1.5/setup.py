@@ -7,9 +7,9 @@
 #
 # replace libminiupnpc.a by libminiupnpc.so for shared library usage
 from distutils.core import setup, Extension
-setup(name="miniupnpc", version="1.5",
-      ext_modules=[
-	         Extension(name="miniupnpc", sources=["miniupnpcmodule.c"],
-			           extra_objects=["libminiupnpc.a"])
-			 ])
 
+setup(
+    name="miniupnpc",
+    version="1.5",
+    ext_modules=[Extension(name="miniupnpc", sources=["miniupnpcmodule.c"], extra_objects=["libminiupnpc.a"])],
+)

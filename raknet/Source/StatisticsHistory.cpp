@@ -528,14 +528,12 @@ void StatisticsHistory::TimeAndValueQueue::ResizeSampleSet( int maxSamples, Data
 	unsigned int dataIndex;
 	Time timeBoundary;
 	StatisticsHistory::TimeAndValue currentSum;
-	Time currentTime;
 	SHValueType numSamples;
 	Time endTime;
 	
 	numSamples=0;
 	endTime = values[values.Size()-1].time;
 	dataIndex=0;
-	currentTime=values[0].time;
 	currentSum.val=0;
 	currentSum.time=values[0].time + interval / 2;
 	timeBoundary = values[0].time + interval;

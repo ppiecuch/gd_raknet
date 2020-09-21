@@ -204,13 +204,11 @@ void SignaledEvent::WaitOnEvent(int timeoutMs)
 
 
 		struct timespec   ts;
-
-		int rc;
 		struct timeval    tp;
-		rc =  gettimeofday(&tp, NULL);
+
+		// int rc =  gettimeofday(&tp, NULL);
 		ts.tv_sec  = tp.tv_sec;
 		ts.tv_nsec = tp.tv_usec * 1000;
-// #endif
 
 		while (timeoutMs > 30)
 		{

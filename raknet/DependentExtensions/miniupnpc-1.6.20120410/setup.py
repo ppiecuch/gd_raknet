@@ -8,11 +8,11 @@
 # replace libminiupnpc.a by libminiupnpc.so for shared library usage
 from distutils.core import setup, Extension
 from distutils import sysconfig
-sysconfig.get_config_vars()["OPT"] = ''
-sysconfig.get_config_vars()["CFLAGS"] = ''
-setup(name="miniupnpc", version="1.6",
-      ext_modules=[
-	         Extension(name="miniupnpc", sources=["miniupnpcmodule.c"],
-			           extra_objects=["libminiupnpc.a"])
-			 ])
 
+sysconfig.get_config_vars()["OPT"] = ""
+sysconfig.get_config_vars()["CFLAGS"] = ""
+setup(
+    name="miniupnpc",
+    version="1.6",
+    ext_modules=[Extension(name="miniupnpc", sources=["miniupnpcmodule.c"], extra_objects=["libminiupnpc.a"])],
+)

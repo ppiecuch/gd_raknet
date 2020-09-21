@@ -1,5 +1,7 @@
 def can_build(env, platform):
-  return True  
+    # requires thread support
+    return platform != "3ds"
+
 
 def configure(env):
-  pass
+    pass

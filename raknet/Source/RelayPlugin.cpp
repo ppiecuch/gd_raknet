@@ -377,14 +377,12 @@ void RelayPlugin::OnGroupMessageFromClient(Packet *packet)
 	BitStream bsIn(packet->data, packet->length, false);
 	bsIn.IgnoreBytes(sizeof(MessageID)*2);
 
-	PacketPriority priority;
-	PacketReliability reliability;
 	char orderingChannel;
 	unsigned char cIn;
 	bsIn.Read(cIn);
-	priority = (PacketPriority) cIn;
+	// PacketPriority priority = (PacketPriority) cIn;
 	bsIn.Read(cIn);
-	reliability = (PacketReliability) cIn;
+	// PacketReliability reliability = (PacketReliability) cIn;
 	bsIn.Read(orderingChannel);
 	BitStream bsData;
 	bsIn.Read(&bsData);

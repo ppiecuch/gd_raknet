@@ -6,10 +6,13 @@
 # python script to build the miniupnpc module under unix
 #
 from distutils.core import setup, Extension
-setup(name="miniupnpc", version="1.5",
-      ext_modules=[
-	         Extension(name="miniupnpc", sources=["miniupnpcmodule.c"],
-	                   libraries=["ws2_32"],
-			           extra_objects=["libminiupnpc.a"])
-			 ])
 
+setup(
+    name="miniupnpc",
+    version="1.5",
+    ext_modules=[
+        Extension(
+            name="miniupnpc", sources=["miniupnpcmodule.c"], libraries=["ws2_32"], extra_objects=["libminiupnpc.a"]
+        )
+    ],
+)
