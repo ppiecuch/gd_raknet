@@ -75,7 +75,7 @@ void GetMyIP_Windows_Linux_IPV4( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTER
 
 	int idx=0;
 	char ac[ 80 ] = "localhost";
-#ifndef __NX
+#if !defined(__NX) && !defined(__psp2__)
 	int err = gethostname( ac, sizeof( ac ) );
     (void) err;
 	RakAssert(err != -1);

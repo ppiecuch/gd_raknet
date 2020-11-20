@@ -48,14 +48,18 @@ using namespace pp;
 #include <arpa/inet.h>
 #include <errno.h>  // error numbers
 #include <stdio.h> // RAKNET_DEBUG_PRINTF
-#if !defined(ANDROID)
+#if !defined(ANDROID) && !defined(__psp2__)
 #include <ifaddrs.h>
 #endif
-#include <netinet/in.h>
+#if !defined(__psp2__)
 #include <net/if.h>
+#endif
+#include <netinet/in.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#if !defined(__psp2__)
 #include <sys/ioctl.h>
+#endif
 
 #endif
 
@@ -190,7 +194,7 @@ RakNet::RakString SocketLayer::GetSubNetForSocketAndIp(__UDPSOCKET__ inSock, Rak
 
 
 
-#if   defined(WINDOWS_STORE_RT)
+#if defined(WINDOWS_STORE_RT) || defined(__psp2__)
 	RakAssert("Not yet supported" && 0);
 	return "";
 #elif defined(_WIN32)
@@ -347,10 +351,15 @@ RakNet::RakString SocketLayer::GetSubNetForSocketAndIp(__UDPSOCKET__ inSock, Rak
 
 
 
-#if   defined(WINDOWS_STORE_RT)
+#if defined(WINDOWS_STORE_RT)
 void GetMyIP_WinRT( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTERNAL_IDS] )
 {
 	// Perhaps DatagramSocket.BindEndpointAsynch, use localHostName as an empty string, then query what it bound to?
+	RakAssert("Not yet supported" && 0);
+}
+#elif defined(__psp2__)
+void GetMyIP_SCE( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTERNAL_IDS] )
+{
 	RakAssert("Not yet supported" && 0);
 }
 #else
@@ -445,8 +454,10 @@ void SocketLayer::GetMyIP( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTERNAL_ID
 
 
 
-#if   defined(WINDOWS_STORE_RT)
+#if defined(WINDOWS_STORE_RT)
 	GetMyIP_WinRT(addresses);
+#elif defined(__psp2__)
+	GetMyIP_SCE(addresses);
 #elif defined(_WIN32)
 	GetMyIP_Win32(addresses);
 #else

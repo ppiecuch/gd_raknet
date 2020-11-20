@@ -187,9 +187,14 @@
 #undef _RAKNET_SUPPORT_PacketizedTCP
 #define _RAKNET_SUPPORT_PacketizedTCP 1
 #endif
-#if _RAKNET_SUPPORT_PacketizedTCP==1 || _RAKNET_SUPPORT_EmailSender==1 || _RAKNET_SUPPORT_HTTPConnection==1
-#undef _RAKNET_SUPPORT_TCPInterface
-#define _RAKNET_SUPPORT_TCPInterface 1
+#if _RAKNET_SUPPORT_TCPInterface==0
+// disable dependant services
+#undef _RAKNET_SUPPORT_PacketizedTCP
+#define _RAKNET_SUPPORT_PacketizedTCP 0
+#undef _RAKNET_SUPPORT_EmailSender
+#define _RAKNET_SUPPORT_EmailSender 0
+#undef _RAKNET_SUPPORT_HTTPConnection
+#define _RAKNET_SUPPORT_HTTPConnection 0
 #endif
 
 

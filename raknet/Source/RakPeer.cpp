@@ -4887,6 +4887,9 @@ bool ProcessOfflineNetworkPacket( SystemAddress systemAddress, const char *data,
 			bool doSecurity=false;
 			b=bs.Read(doSecurity);
 			RakAssert(b);
+#if defined(_DEBUG)
+			(b); // unused
+#endif
 
 #if LIBCAT_SECURITY==1
 			char answer[cat::EasyHandshake::ANSWER_BYTES];

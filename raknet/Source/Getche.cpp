@@ -10,7 +10,7 @@
 
 #if   defined(_WIN32)
 #include <conio.h> /* getche() */
-#elif  defined(__S3E__)
+#elif  defined(__S3E__) || defined(__psp2__)
 
 #else
 

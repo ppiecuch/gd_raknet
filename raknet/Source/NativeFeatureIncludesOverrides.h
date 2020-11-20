@@ -16,4 +16,8 @@
 
 //#define LIBCAT_SECURITY 1
 
+#ifdef __psp2__
+#define _RAKNET_SUPPORT_TCPInterface 0
+#endif
+
 #endif

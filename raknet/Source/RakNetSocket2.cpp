@@ -25,14 +25,18 @@ using namespace RakNet;
 #include <fcntl.h>
 #include <arpa/inet.h>
 #include <errno.h>  // error numbers
-#if !defined(ANDROID)
+#if !defined(ANDROID) && !defined(__psp2__)
 #include <ifaddrs.h>
 #endif
-#include <netinet/in.h>
+#if !defined(__psp2__)
 #include <net/if.h>
+#endif
+#include <netinet/in.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#if !defined(__psp2__)
 #include <sys/ioctl.h>
+#endif
 #endif
 
 #ifdef TEST_NATIVE_CLIENT_ON_WINDOWS
