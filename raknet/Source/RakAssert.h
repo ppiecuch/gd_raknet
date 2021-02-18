@@ -9,4 +9,7 @@
  */
 
 #include <assert.h>
+
+#define RakUnused(expr) do { (void)(expr); } while (0)
+
 #include "RakNetDefines.h"

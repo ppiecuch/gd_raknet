@@ -872,7 +872,7 @@ void Connection_RM3::AutoConstructByQuery(ReplicaManager3 *replicaManager3, Worl
 }
 void ReplicaManager3::Update(void)
 {
-	unsigned int index,index2,index3;
+	unsigned int index2,index3;
 
 	WorldId worldId;
 	RM3World *world;
@@ -883,7 +883,7 @@ void ReplicaManager3::Update(void)
 		world = worldsList[index3];
 		worldId = world->worldId;
 
-		for (index=0; index < world->connectionList.Size(); index++)
+		for (unsigned index=0; index < world->connectionList.Size(); index++)
 		{
 			if (world->connectionList[index]->isValidated==false)
 				continue;
@@ -898,13 +898,12 @@ void ReplicaManager3::Update(void)
 			world = worldsList[index3];
 			worldId = world->worldId;
 
-			for (index=0; index < world->userReplicaList.Size(); index++)
+			for (unsigned index=0; index < world->userReplicaList.Size(); index++)
 			{
 				world->userReplicaList[index]->forceSendUntilNextUpdate=false;
 				world->userReplicaList[index]->OnUserReplicaPreSerializeTick();
 			}
 
-			unsigned int index;
 			SerializeParameters sp;
 			sp.curTime=time;
 			Connection_RM3 *connection;
@@ -915,7 +914,7 @@ void ReplicaManager3::Update(void)
 			for (int i=0; i < RM3_NUM_OUTPUT_BITSTREAM_CHANNELS; i++)
 				sp.pro[i]=defaultSendParameters;
 			index2=0;
-			for (index=0; index < world->connectionList.Size(); index++)
+			for (unsigned index=0; index < world->connectionList.Size(); index++)
 			{
 				connection = world->connectionList[index];
 				sp.bitsWrittenSoFar=0;

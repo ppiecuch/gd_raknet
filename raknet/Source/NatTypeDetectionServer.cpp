@@ -119,7 +119,6 @@ void NatTypeDetectionServer::Shutdown()
 }
 void NatTypeDetectionServer::Update(void)
 {
-	int i=0;
 	RakNet::TimeMS time = RakNet::GetTimeMS();
 	RakNet::BitStream bs;
 	SystemAddress boundAddress;
@@ -254,7 +253,7 @@ void NatTypeDetectionServer::Update(void)
 	*/
 
 
-	while (i < (int) natDetectionAttempts.Size())
+	int i=0; while (i < (int) natDetectionAttempts.Size())
 	{
 		if (time > natDetectionAttempts[i].nextStateTime)
 		{

@@ -181,7 +181,6 @@ void ConsoleServer::Update(void)
 				if (commandParsed==false)
 				{
 					// Try again, for all commands for all parsers.
-					RakNet::RegisteredCommand rc;
 					for (i=0; i < commandParserList.Size(); i++)
 					{
 						if (commandParserList[i]->GetRegisteredCommand(parameterList[1], &rc))

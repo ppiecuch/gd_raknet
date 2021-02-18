@@ -607,26 +607,23 @@ void CloudServer::OnGetRequest(Packet *packet)
 			remoteCloudClient = remoteSystems.ItemAtIndex(remoteSystemsHashIndex);
 		}
 
-		unsigned int keyIndex;
-		for (keyIndex=0; keyIndex < getRequest->cloudQueryWithAddresses.cloudQuery.keys.Size(); keyIndex++)
+		for (unsigned keyIndex=0; keyIndex < getRequest->cloudQueryWithAddresses.cloudQuery.keys.Size(); keyIndex++)
 		{
 			cloudKey = getRequest->cloudQueryWithAddresses.cloudQuery.keys[keyIndex];
 
 			unsigned int keySubscriberIndex;
 			bool hasKeySubscriber;
 			keySubscriberIndex = remoteCloudClient->subscribedKeys.GetIndexFromKey(cloudKey, &hasKeySubscriber);
-			KeySubscriberID* keySubscriberId;
 			if (hasKeySubscriber)
 			{
 				DataStructures::List<RakNetGUID> specificSystems;
 				UnsubscribeFromKey(remoteCloudClient, packet->guid, keySubscriberIndex, cloudKey, specificSystems);
 			}
 
-			keySubscriberId = RakNet::OP_NEW<KeySubscriberID>(_FILE_AND_LINE_);
+			KeySubscriberID* keySubscriberId = RakNet::OP_NEW<KeySubscriberID>(_FILE_AND_LINE_);
 			keySubscriberId->key=cloudKey;
 
-			unsigned int specificSystemIndex;
-			for (specificSystemIndex=0; specificSystemIndex < getRequest->cloudQueryWithAddresses.specificSystems.Size(); specificSystemIndex++)
+			for (unsigned specificSystemIndex=0; specificSystemIndex < getRequest->cloudQueryWithAddresses.specificSystems.Size(); specificSystemIndex++)
 			{
 				keySubscriberId->specificSystemsSubscribedTo.Insert(getRequest->cloudQueryWithAddresses.specificSystems[specificSystemIndex], getRequest->cloudQueryWithAddresses.specificSystems[specificSystemIndex], true, _FILE_AND_LINE_);
 			}
@@ -648,8 +645,7 @@ void CloudServer::OnGetRequest(Packet *packet)
 				CloudData *cloudData;
 				bool keyDataListExists;
 
-				unsigned int specificSystemIndex;
-				for (specificSystemIndex=0; specificSystemIndex < getRequest->cloudQueryWithAddresses.specificSystems.Size(); specificSystemIndex++)
+				for (unsigned specificSystemIndex=0; specificSystemIndex < getRequest->cloudQueryWithAddresses.specificSystems.Size(); specificSystemIndex++)
 				{
 					RakNetGUID specificSystem = getRequest->cloudQueryWithAddresses.specificSystems[specificSystemIndex];
 
@@ -687,13 +683,11 @@ void CloudServer::OnGetRequest(Packet *packet)
 				subscribedKeysIndex = remoteCloudClient->subscribedKeys.GetIndexFromKey(cloudDataList->key, &subscribedKeysIndexExists);
 				if (subscribedKeysIndexExists)
 				{
-					KeySubscriberID* keySubscriberId;
-					keySubscriberId = remoteCloudClient->subscribedKeys[subscribedKeysIndex];
-					unsigned int specificSystemIndex;
-					for (specificSystemIndex=0; specificSystemIndex < keySubscriberId->specificSystemsSubscribedTo.Size(); specificSystemIndex++)
+					KeySubscriberID* keyId = remoteCloudClient->subscribedKeys[subscribedKeysIndex];
+					for (unsigned specificSystemIndex=0; specificSystemIndex < keyId->specificSystemsSubscribedTo.Size(); specificSystemIndex++)
 					{
 						bool keyDataExists;
-						unsigned int keyDataIndex = cloudDataList->keyData.GetIndexFromKey(keySubscriberId->specificSystemsSubscribedTo[specificSystemIndex], &keyDataExists);
+						unsigned int keyDataIndex = cloudDataList->keyData.GetIndexFromKey(keyId->specificSystemsSubscribedTo[specificSystemIndex], &keyDataExists);
 						if (keyDataExists)
 						{
 							CloudData *keyData = cloudDataList->keyData[keyDataIndex];
@@ -728,11 +722,11 @@ void CloudServer::OnUnsubscribeRequest(Packet *packet)
 	RemoteCloudClient* remoteCloudClient = remoteSystems.ItemAtIndex(remoteSystemIndex);
 
 	uint16_t keyCount, specificSystemCount;
+	CloudKey cloudKey;
 	DataStructures::List<CloudKey> cloudKeys;
 	DataStructures::List<RakNetGUID> specificSystems;
 	uint16_t index;
 
-	CloudKey cloudKey;
 	bsIn.Read(keyCount);
 	for (index=0; index < keyCount; index++)
 	{
@@ -760,7 +754,7 @@ void CloudServer::OnUnsubscribeRequest(Packet *packet)
 
 	for (index=0; index < keyCount; index++)
 	{
-		CloudKey cloudKey = cloudKeys[index];
+		cloudKey = cloudKeys[index];
 
 	//	dataRepositoryIndex = 
 			dataRepository.GetIndexFromKey(cloudKey, &dataRepositoryExists);

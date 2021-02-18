@@ -40,12 +40,13 @@ public:
 	
 	virtual bool OnFile(OnFileStruct *onFileStruct)
 	{
+		const char *fileName = onFileStruct->fileName;
 		char fullPathToDir[1024];
 
-		if (onFileStruct->fileName && onFileStruct->fileData && subdirLen < strlen(onFileStruct->fileName))
+		if (fileName && onFileStruct->fileData && subdirLen < strlen(fileName))
 		{
 			strcpy(fullPathToDir, outputSubdir);
-			strcat(fullPathToDir, onFileStruct->fileName+subdirLen);
+			strcat(fullPathToDir, fileName+subdirLen);
 			WriteFileWithDirectories(fullPathToDir, (char*)onFileStruct->fileData, (unsigned int ) onFileStruct->byteLengthOfThisFile);
 		}
 		else
@@ -56,12 +57,13 @@ public:
 
 	virtual void OnFileProgress(FileProgressStruct *fps)
 	{
+		const char *fileName = fps->onFileStruct->fileName;
 		char fullPathToDir[1024];
 
-		if (fps->onFileStruct->fileName && subdirLen < strlen(fps->onFileStruct->fileName))
+		if (fileName && subdirLen < strlen(fileName))
 		{
 			strcpy(fullPathToDir, outputSubdir);
-			strcat(fullPathToDir, fps->onFileStruct->fileName+subdirLen);
+			strcat(fullPathToDir, fileName+subdirLen);
 		}
 		else
 			fullPathToDir[0]=0;

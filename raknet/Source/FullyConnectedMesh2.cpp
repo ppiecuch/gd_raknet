@@ -844,6 +844,9 @@ void FullyConnectedMesh2::RespondOnVerifiedJoinCapable(Packet *packet, bool acce
 				}
 			}
 			RakAssert(written==true);
+#ifndef _DEBUG
+			RakUnused(written);
+#endif
 		}
 		SendUnified(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->guid, false);
 		return;
@@ -1159,6 +1162,9 @@ PluginReceiveResult FullyConnectedMesh2::OnVerifiedJoinCapable(Packet *packet)
 				}
 			}
 			RakAssert(written);
+#ifndef _DEBUG
+			RakUnused(written);
+#endif
 		}
 		SendUnified(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->guid, false);
 		return RR_STOP_PROCESSING_AND_DEALLOCATE;

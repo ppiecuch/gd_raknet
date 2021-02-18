@@ -150,13 +150,13 @@ void FileListTransfer::Send(FileList *fileList, RakNet::RakPeerInterface *rakPee
 	for (unsigned int flpcIndex=0; flpcIndex < fileListProgressCallbacks.Size(); flpcIndex++)
 		fileList->AddCallback(fileListProgressCallbacks[flpcIndex]);
 
-	unsigned int i, totalLength;
+	unsigned int totalLength;
 	RakNet::BitStream outBitstream;
 	bool sendReference;
 	const char *dataBlocks[2];
 	int lengths[2];
 	totalLength=0;
-	for (i=0; i < fileList->fileList.Size(); i++)
+	for (unsigned int i=0; i < fileList->fileList.Size(); i++)
 	{
 		const FileListNode &fileListNode = fileList->fileList[i];
 		totalLength+=fileListNode.dataLengthBytes;
@@ -180,7 +180,7 @@ void FileListTransfer::Send(FileList *fileList, RakNet::RakPeerInterface *rakPee
 
 		DataStructures::Queue<FileToPush*> filesToPush;
 	
-		for (i=0; i < fileList->fileList.Size(); i++)
+		for (unsigned int i=0; i < fileList->fileList.Size(); i++)
 		{
 			sendReference = fileList->fileList[i].isAReference && _incrementalReadInterface!=0;
 			if (sendReference)
@@ -532,8 +532,7 @@ void FileListTransfer::OnRakPeerShutdown(void)
 }
 void FileListTransfer::Clear(void)
 {
-	unsigned i;
-	for (i=0; i < fileListReceivers.Size(); i++)
+	for (unsigned int i=0; i < fileListReceivers.Size(); i++)
 	{
 		fileListReceivers[i]->downloadHandler->OnDereference();
 		if (fileListReceivers[i]->deleteDownloadHandler)

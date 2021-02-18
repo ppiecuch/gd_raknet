@@ -69,8 +69,7 @@ bool PacketizedTCP::SendList( const char **data, const unsigned int *lengths, co
 	if (systemAddress==UNASSIGNED_SYSTEM_ADDRESS && broadcast==false)
 		return false;
 	PTCPHeader totalLengthOfUserData=0;
-	int i;
-	for (i=0; i < numParameters; i++)
+	for (int i=0; i < numParameters; i++)
 	{
 		if (lengths[i]>0)
 			totalLengthOfUserData+=lengths[i];

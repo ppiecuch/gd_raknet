@@ -580,8 +580,7 @@ void TCPInterface::CloseConnection( SystemAddress systemAddress )
 	if (systemAddress==UNASSIGNED_SYSTEM_ADDRESS)
 		return;
 
-	unsigned int i;
-	for (i=0; i < messageHandlerList.Size(); i++)
+	for (unsigned i=0; i < messageHandlerList.Size(); i++)
 		messageHandlerList[i]->OnClosedConnection(systemAddress, UNASSIGNED_RAKNET_GUID, LCR_CLOSED_BY_USER);
 
 	if (systemAddress.systemIndex<remoteClientsLength && remoteClients[systemAddress.systemIndex].systemAddress==systemAddress)

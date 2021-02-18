@@ -1159,19 +1159,18 @@ void TM_World::ReferenceTeam(TM_Team *team, NetworkID networkId, bool applyBalan
 
 void TM_World::DereferenceTeam(TM_Team *team, NoTeamId noTeamSubcategory)
 {
-	unsigned int i;
-	for (i=0; i < teams.Size(); i++)
+	for (unsigned int i=0; i < teams.Size(); i++)
 	{
 		if (teams[i]==team)
 		{
-			TM_Team *team = teams[i];
-			while (team->teamMembers.Size())
+			TM_Team *iTeam = teams[i];
+			while (iTeam->teamMembers.Size())
 			{
-				team->teamMembers[team->teamMembers.Size()-1]->LeaveTeam(team, noTeamSubcategory);
+				iTeam->teamMembers[iTeam->teamMembers.Size()-1]->LeaveTeam(iTeam, noTeamSubcategory);
 			}
 			teams.RemoveAtIndex(i);
 
-			teamsHash.Remove(team->GetNetworkID(),_FILE_AND_LINE_);
+			teamsHash.Remove(iTeam->GetNetworkID(),_FILE_AND_LINE_);
 
 			break;
 		}

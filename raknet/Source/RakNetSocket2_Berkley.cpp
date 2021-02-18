@@ -43,6 +43,9 @@ void RNS2_Berkley::SetSocketOptions(void)
 	r = setsockopt__( rns2Socket, SOL_SOCKET, SO_SNDBUF, ( char * ) & sock_opt, sizeof ( sock_opt ) );
 	RakAssert(r==0);
 
+#ifndef _DEBUG
+	RakUnused(r);
+#endif
 }
 
 void RNS2_Berkley::SetNonBlockingSocket(unsigned long nonblocking)

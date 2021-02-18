@@ -349,10 +349,10 @@ void RelayPlugin::SendMessageToRoom(StrAndGuidAndRoom **strAndGuidSender, BitStr
 			bsOut.Write(message);
 
 			RP_Group *room = chatRooms[i];
-			for (unsigned int i=0; i < room->usersInRoom.Size(); i++)
+			for (unsigned int ii=0; ii < room->usersInRoom.Size(); ii++)
 			{
-				if (room->usersInRoom[i].guid!=(*strAndGuidSender)->guid)
-					SendUnified(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, room->usersInRoom[i].guid, false);
+				if (room->usersInRoom[ii].guid!=(*strAndGuidSender)->guid)
+					SendUnified(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, room->usersInRoom[ii].guid, false);
 			}
 
 			break;

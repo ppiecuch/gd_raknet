@@ -204,7 +204,7 @@ void SignaledEvent::WaitOnEvent(int timeoutMs)
 
 
 		struct timespec   ts;
-		struct timeval    tp;
+		struct timeval    tp = { 0 };
 
 		// int rc =  gettimeofday(&tp, NULL);
 		ts.tv_sec  = tp.tv_sec;

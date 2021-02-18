@@ -20,7 +20,7 @@
 #include <io.h>
 
 
-#elif !defined ( __APPLE__ ) && !defined ( __APPLE_CC__ ) && !defined ( __PPC__ ) && !defined ( __GCW0__ ) && !defined ( __FreeBSD__ ) && !defined ( __S3E__ ) && !defined ( __psp2__ )
+#elif !defined ( __APPLE__ ) && !defined ( __APPLE_CC__ ) && !defined ( __PPC__ ) && !defined (__ANDROID__) && !defined ( __GCW0__ ) && !defined ( __odroid__ ) && !defined ( __FreeBSD__ ) && !defined ( __S3E__ ) && !defined ( __psp2__ )
 #include <sys/io.h>
 #endif
 

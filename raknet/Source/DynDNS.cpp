@@ -215,11 +215,10 @@ void DynDNS::Update(void)
 				myIp.FromString(result);
 				myIp.ToString(false, myIPStr);
 
-				char existingHost[65];
-				existingHost[0]=0;
+				char existingHost[65] = {0};
 				// Resolve DNS we are setting. If equal to current then abort
 				RakNetSocket2::DomainNameToIP(host.C_String(), existingHost);
-				if (existingHost && strcmp(existingHost, myIPStr)==0)
+				if (strcmp(existingHost, myIPStr)==0)
 				{
 					// DynDNS considers setting the IP to what it is already set abuse
 					tcp->DeallocatePacket(packet);

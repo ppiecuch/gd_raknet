@@ -49,7 +49,6 @@ void RakSleep(unsigned int ms)
 	//Modified slightly from the original
 	struct timespec timeToWait;
 	struct timeval now;
-	int rt;
 
 	gettimeofday(&now,NULL);
 
@@ -65,7 +64,7 @@ void RakSleep(unsigned int ms)
 	}
 
 	pthread_mutex_lock(&fakeMutex);
-	rt = pthread_cond_timedwait(&fakeCond, &fakeMutex, &timeToWait);
+	/* int rt = */ pthread_cond_timedwait(&fakeCond, &fakeMutex, &timeToWait);
 	pthread_mutex_unlock(&fakeMutex);
 #endif
 }
