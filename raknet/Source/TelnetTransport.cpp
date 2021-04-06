@@ -26,6 +26,19 @@
 #pragma warning( push )
 #endif
 
+size_t _strlcat(char *dst, const char *src, size_t maxlen) {
+	const size_t srclen = strlen(src);
+	const size_t dstlen = strnlen(dst, maxlen);
+	if (dstlen == maxlen) return maxlen + srclen;
+	if (srclen < maxlen-dstlen) {
+		memcpy(dst + dstlen, src, srclen + 1);
+	} else {
+		memcpy(dst + dstlen, src, maxlen - dstlen - 1);
+		dst[maxlen - 1] = '\0';
+	}
+	return dstlen + srclen;
+}
+
 using namespace RakNet;
 
 STATIC_FACTORY_DEFINITIONS(TelnetTransport,TelnetTransport);
@@ -142,7 +155,7 @@ Packet* TelnetTransport::Receive( void )
 			// Up arrow, return last string
 			for (int i=0; remoteClient->textInput[i]; i++)
 				remoteClient->textInput[i]=8;
-			strlcat(remoteClient->textInput, remoteClient->lastSentTextInput, REMOTE_MAX_TEXT_INPUT);
+			_strlcat(remoteClient->textInput, remoteClient->lastSentTextInput, REMOTE_MAX_TEXT_INPUT);
 			tcpInterface->Send((const char *)remoteClient->textInput, (unsigned int) strlen(remoteClient->textInput), p->systemAddress, false);
 			strcpy(remoteClient->textInput,remoteClient->lastSentTextInput);
 			remoteClient->cursorPosition=(unsigned int) strlen(remoteClient->textInput);
