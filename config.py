@@ -1,5 +1,5 @@
 def can_build(env, platform):
-    return env["thread_support"]
+    return env["feature_multiplethreads_allowed"]
 
 
 def configure(env):
