@@ -12,6 +12,9 @@ env_module.Append(CPPPATH=[".", "raknet/Source"])
 sources = Glob("*.cpp")
 sources += Glob("raknet/Source/*.cpp")
 
+if env["platform"] == "windows":
+	env_module.Append(CPPDEFINES=["_CRT_SECURE_NO_WARNINGS", "_WINSOCK_DEPRECATED_NO_WARNINGS"])
+
 # Compile as a static library
 lib = env_module.Library(module, sources)
 # Add the library as a dependency of the final executable
