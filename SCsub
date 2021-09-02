@@ -4,6 +4,8 @@ import os
 Import("env")
 Import("env_modules")
 
+is_gcc = "gcc" in os.path.basename(env["CC"])
+
 module = os.path.splitext(os.path.basename(os.path.realpath(".")))[0]
 
 env_module = env_modules.Clone()
@@ -14,6 +16,9 @@ sources += Glob("raknet/Source/*.cpp")
 
 if env["platform"] == "windows":
 	env_module.Append(CPPDEFINES=["_CRT_SECURE_NO_WARNINGS", "_WINSOCK_DEPRECATED_NO_WARNINGS"])
+
+if is_gcc:
+	env_module.Append(CPPFLAGS=["-Wno-array-bounds"]) # false errors
 
 # Compile as a static library
 lib = env_module.Library(module, sources)
