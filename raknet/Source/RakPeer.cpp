@@ -425,7 +425,7 @@ StartupResult RakPeer::Startup( unsigned int maxConnections, SocketDescriptor *s
 
 
 	// Go through all socket descriptors and precreate sockets on the specified addresses
-	for (int i=0; i<socketDescriptorCount; i++)
+	for (unsigned i=0; i<socketDescriptorCount; i++)
 	{
 		/*
 		const char *addrToBind;
@@ -433,15 +433,7 @@ StartupResult RakPeer::Startup( unsigned int maxConnections, SocketDescriptor *s
 			addrToBind=0;
 		else
 			addrToBind=socketDescriptors[i].hostAddress;
-			*/
-
-
-
-
-
-
-
-
+		*/
 
 		/*
 #if RAKNET_SUPPORT_IPV6==1
@@ -573,7 +565,7 @@ StartupResult RakPeer::Startup( unsigned int maxConnections, SocketDescriptor *s
 	}
 
 #if !defined(__native_client__) && !defined(WINDOWS_STORE_RT)
-	for (int i=0; i<socketDescriptorCount; i++)
+	for (unsigned i=0; i<socketDescriptorCount; i++)
 	{
 		if (socketList[i]->IsBerkleySocket())
 			((RNS2_Berkley*) socketList[i])->CreateRecvPollingThread(threadPriority);
@@ -618,7 +610,7 @@ StartupResult RakPeer::Startup( unsigned int maxConnections, SocketDescriptor *s
 
 		activeSystemList = RakNet::OP_NEW_ARRAY<RemoteSystemStruct*>(maximumNumberOfPeers, _FILE_AND_LINE_ );
 
-		for (int i = 0; i < maximumNumberOfPeers; i++ )
+		for (unsigned i = 0; i < maximumNumberOfPeers; i++ )
 		//for ( i = 0; i < remoteSystemListSize; i++ )
 		{
 			// remoteSystemList in Single thread
@@ -724,12 +716,12 @@ StartupResult RakPeer::Startup( unsigned int maxConnections, SocketDescriptor *s
 #endif // RAKPEER_USER_THREADED!=1
 	}
 
-	for (int i=0; i < pluginListTS.Size(); i++)
+	for (unsigned i=0; i < pluginListTS.Size(); i++)
 	{
 		pluginListTS[i]->OnRakPeerStartup();
 	}
 
-	for (int i=0; i < pluginListNTS.Size(); i++)
+	for (unsigned i=0; i < pluginListNTS.Size(); i++)
 	{
 		pluginListNTS[i]->OnRakPeerStartup();
 	}
@@ -4564,7 +4556,7 @@ bool ProcessOfflineNetworkPacket( SystemAddress systemAddress, const char *data,
 			rakPeer->pluginListNTS[i]->OnDirectSocketSend((char*) bs.GetData(), bs.GetNumberOfBitsUsed(), systemAddress);
 		rakNetSocket->Send(&bsp, _FILE_AND_LINE_);
 
-/*
+		/*
 		for (unsigned i=0; i < rakPeer->pluginListNTS.Size(); i++)
 			rakPeer->pluginListNTS[i]->OnDirectSocketSend((char*) bs.GetData(), bs.GetNumberOfBitsUsed(), systemAddress);
 		SocketLayer::SendTo( rakNetSocket, (char*) bs.GetData(), bs.GetNumberOfBytesUsed(), systemAddress, _FILE_AND_LINE_ );
@@ -4584,7 +4576,7 @@ bool ProcessOfflineNetworkPacket( SystemAddress systemAddress, const char *data,
 	else if (
 		((unsigned char)data[0] == ID_UNCONNECTED_PING ||
 		(unsigned char)data[0] == ID_UNCONNECTED_PING_OPEN_CONNECTIONS) &&
-		length >= sizeof(unsigned char) + sizeof(RakNet::Time) + sizeof(OFFLINE_MESSAGE_DATA_ID))
+		(size_t) length >= sizeof(unsigned char) + sizeof(RakNet::Time) + sizeof(OFFLINE_MESSAGE_DATA_ID))
 	{
 		*isOfflineMessage=memcmp(data+sizeof(unsigned char) + sizeof(RakNet::Time), OFFLINE_MESSAGE_DATA_ID, sizeof(OFFLINE_MESSAGE_DATA_ID))==0;
 	}
@@ -4630,7 +4622,8 @@ bool ProcessOfflineNetworkPacket( SystemAddress systemAddress, const char *data,
 
 		// These are all messages from unconnected systems.  Messages here can be any size, but are never processed from connected systems.
 		if ( ( (unsigned char) data[ 0 ] == ID_UNCONNECTED_PING_OPEN_CONNECTIONS
-			|| (unsigned char)(data)[0] == ID_UNCONNECTED_PING)	&& length >= sizeof(unsigned char)+sizeof(RakNet::Time)+sizeof(OFFLINE_MESSAGE_DATA_ID) )
+			|| (unsigned char)(data)[0] == ID_UNCONNECTED_PING)
+			&& (size_t) length >= sizeof(unsigned char)+sizeof(RakNet::Time)+sizeof(OFFLINE_MESSAGE_DATA_ID) )
 		{
 			if ( (unsigned char)(data)[0] == ID_UNCONNECTED_PING ||
 				rakPeer->AllowIncomingConnections() ) // Open connections with players
