@@ -192,6 +192,9 @@ void BitStream::Write( BitStream *bitStream)
 }
 void BitStream::Write( BitStream *bitStream, BitSize_t numberOfBits )
 {
+	if (numberOfBits > bitStream->GetNumberOfUnreadBits())
+ 		return;
+
 	AddBitsAndReallocate( numberOfBits );
 	BitSize_t numberOfBitsMod8;
 
@@ -205,7 +208,7 @@ void BitStream::Write( BitStream *bitStream, BitSize_t numberOfBits )
 		numberOfBitsUsed+=BYTES_TO_BITS(numBytes);
 	}
 
-	while (numberOfBits-->0 && bitStream->readOffset + 1 <= bitStream->numberOfBitsUsed)
+	while (numberOfBits-->0)
 	{
 		numberOfBitsMod8 = numberOfBitsUsed & 7;
 		if ( numberOfBitsMod8 == 0 )
@@ -274,7 +277,7 @@ bool BitStream::Read( char* outByteArray, const unsigned int numberOfBytes )
 	// Optimization:
 	if ((readOffset & 7) == 0)
 	{
-		if ( readOffset + ( numberOfBytes << 3 ) > numberOfBitsUsed )
+		if ( GetNumberOfUnreadBits() < (numberOfBytes << 3) )
 			return false;
 
 		// Write the data
@@ -378,7 +381,7 @@ bool BitStream::ReadAlignedBytes( unsigned char* inOutByteArray, const unsigned 
 	// Byte align
 	AlignReadToByteBoundary();
 
-	if ( readOffset + ( numberOfBytesToRead << 3 ) > numberOfBitsUsed )
+	if ( GetNumberOfUnreadBits() < (numberOfBytesToRead << 3) )
 		return false;
 
 	// Write the data
@@ -556,7 +559,7 @@ bool BitStream::ReadBits( unsigned char *inOutByteArray, BitSize_t numberOfBitsT
 	if (numberOfBitsToRead<=0)
 		return false;
 
-	if ( readOffset + numberOfBitsToRead > numberOfBitsUsed )
+	if ( GetNumberOfUnreadBits() < numberOfBitsToRead )
 		return false;
 
 
@@ -1038,7 +1041,7 @@ void BitStream::WriteAlignedVar8(const char *inByteArray)
 bool BitStream::ReadAlignedVar8(char *inOutByteArray)
 {
 	RakAssert((readOffset&7)==0);
-	if ( readOffset + 1*8 > numberOfBitsUsed )
+	if ( GetNumberOfUnreadBits() < 1 * 8 )
 		return false;
 
 	inOutByteArray[0] = data[( readOffset >> 3 ) + 0];
@@ -1067,7 +1070,7 @@ void BitStream::WriteAlignedVar16(const char *inByteArray)
 bool BitStream::ReadAlignedVar16(char *inOutByteArray)
 {
 	RakAssert((readOffset&7)==0);
-	if ( readOffset + 2*8 > numberOfBitsUsed )
+	if ( GetNumberOfUnreadBits() < 2 * 8 )
 		return false;
 #ifndef __BITSTREAM_NATIVE_END
 	if (DoEndianSwap())
@@ -1111,7 +1114,7 @@ void BitStream::WriteAlignedVar32(const char *inByteArray)
 bool BitStream::ReadAlignedVar32(char *inOutByteArray)
 {
 	RakAssert((readOffset&7)==0);
-	if ( readOffset + 4*8 > numberOfBitsUsed )
+	if ( GetNumberOfUnreadBits() < 4*8 )
 		return false;
 #ifndef __BITSTREAM_NATIVE_END
 	if (DoEndianSwap())
