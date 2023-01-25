@@ -992,7 +992,7 @@ void Table::PrintRow(char *out, int outLength, char columnDelineator, bool print
 		{
 			if (inputRow->cells[i]->isEmpty==false)
 			{
-				sprintf(buff, "%f", inputRow->cells[i]->i);
+				snprintf(buff, 512, "%f", inputRow->cells[i]->i);
 				len=(int)strlen(buff);
 			}
 			else
@@ -1019,7 +1019,7 @@ void Table::PrintRow(char *out, int outLength, char columnDelineator, bool print
 		{
 			if (inputRow->cells[i]->isEmpty==false && inputRow->cells[i]->ptr)
 			{
-				sprintf(buff, "%p", inputRow->cells[i]->ptr);
+				snprintf(buff, 512, "%p", inputRow->cells[i]->ptr);
 				len=(int)strlen(buff);
 			}
 			else

@@ -200,7 +200,7 @@ void NatPunchthroughServer::Update(void)
 							// 8/01/09 Fixed bug where this was after DeleteConnectionAttempt()
 							connectionAttempt->sender->systemAddress.ToString(true,addr1);
 							connectionAttempt->recipient->systemAddress.ToString(true,addr2);
-							sprintf(str, "Sending ID_NAT_TARGET_UNRESPONSIVE to sender %s and recipient %s.", addr1, addr2);
+							snprintf(str, 1024, "Sending ID_NAT_TARGET_UNRESPONSIVE to sender %s and recipient %s.", addr1, addr2);
 							natPunchthroughServerDebugInterface->OnServerMessage(str);
 							RakNet::RakString log;
 							connectionAttempt->sender->LogConnectionAttempts(log);
@@ -596,7 +596,7 @@ void NatPunchthroughServer::StartPunchthroughForUser(User *user)
 				char addr1[128], addr2[128];
 				sender->systemAddress.ToString(true,addr1);
 				recipient->systemAddress.ToString(true,addr2);
-				sprintf(str, "Sending NAT_ATTEMPT_PHASE_GETTING_RECENT_PORTS to sender %s and recipient %s.", addr1, addr2);
+				snprintf(str, 1024, "Sending NAT_ATTEMPT_PHASE_GETTING_RECENT_PORTS to sender %s and recipient %s.", addr1, addr2);
 				natPunchthroughServerDebugInterface->OnServerMessage(str);
 			}
 

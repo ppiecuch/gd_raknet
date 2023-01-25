@@ -32,9 +32,9 @@ void PacketFileLogger::StartLog(const char *filenamePrefix)
 	// Open file for writing
 	char filename[256];
 	if (filenamePrefix)
-		sprintf(filename, "%s_%i.csv", filenamePrefix, (int) RakNet::GetTimeMS());
+		snprintf(filename, 256, "%s_%i.csv", filenamePrefix, (int) RakNet::GetTimeMS());
 	else
-		sprintf(filename, "PacketLog_%i.csv", (int) RakNet::GetTimeMS());
+		snprintf(filename, 256, "PacketLog_%i.csv", (int) RakNet::GetTimeMS());
 	packetLogFile = fopen(filename, "wt");
 	LogHeader();
 	if (packetLogFile)

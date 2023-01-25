@@ -65,7 +65,7 @@ unsigned int splitPacketId, unsigned int splitPacketIndex, unsigned int splitPac
 	// would just be redundant.
 	if(idToPrint == NULL)
 	{
-		sprintf(numericID, "%5u", id);
+		snprintf(numericID, 16, "%5u", id);
 		idToPrint = numericID;
 	}
 
@@ -92,27 +92,27 @@ unsigned int splitPacketId, unsigned int splitPacketIndex, unsigned int splitPac
 	}
 	else
 	{
-		sprintf(str3,"%5u",reliableMessageNumber);
+		snprintf(str3, 64, "%5u", reliableMessageNumber);
 	}
 
 	sprintf(into, "%s,%s%s,%s,%s,%5u,%s,%u,%" PRINTF_64_BIT_MODIFIER "u,%s,%s,%i,%i,%i,%i,%s,"
-					, localtime
-					, prefix
-					, dir
-					, type
-					, str3
-					, frame
-					, idToPrint
-					, bitLen
-					, time
-					, str1
-					, str2
-					, splitPacketId
-					, splitPacketIndex
-					, splitPacketCount
-					, orderingIndex
-					, suffix
-					);
+			, localtime
+			, prefix
+			, dir
+			, type
+			, str3
+			, frame
+			, idToPrint
+			, bitLen
+			, time
+			, str1
+			, str2
+			, splitPacketId
+			, splitPacketIndex
+			, splitPacketCount
+			, orderingIndex
+			, suffix
+	);
 }
 void PacketLogger::OnDirectSocketSend(const char *data, const BitSize_t bitsUsed, SystemAddress remoteSystemAddress)
 {
@@ -160,13 +160,13 @@ void PacketLogger::OnAck(unsigned int messageNumber, SystemAddress remoteSystemA
 	char localtime[128];
 	GetLocalTime(localtime);
 
-	sprintf(str, "%s,Rcv,Ack,%i,,,,%" PRINTF_64_BIT_MODIFIER "u,%s,%s,,,,,,"
-					, localtime
-					, messageNumber
-					, (unsigned long long) time
-					, str1
-					, str2
-					);
+	snprintf(str, 256, "%s,Rcv,Ack,%i,,,,%" PRINTF_64_BIT_MODIFIER "u,%s,%s,,,,,,"
+			, localtime
+			, messageNumber
+			, (unsigned long long) time
+			, str1
+			, str2
+	);
 	AddToLog(str);
 }
 void PacketLogger::OnPushBackPacket(const char *data, const BitSize_t bitsUsed, SystemAddress remoteSystemAddress)
@@ -180,14 +180,14 @@ void PacketLogger::OnPushBackPacket(const char *data, const BitSize_t bitsUsed, 
 	char localtime[128];
 	GetLocalTime(localtime);
 
-	sprintf(str, "%s,Lcl,PBP,,,%s,%i,%" PRINTF_64_BIT_MODIFIER "u,%s,%s,,,,,,"
-					, localtime
-					, BaseIDTOString(data[0])
-					, bitsUsed
-					, (unsigned long long) time
-					, str1
-					, str2
-					);
+	snprintf(str, 256, "%s,Lcl,PBP,,,%s,%i,%" PRINTF_64_BIT_MODIFIER "u,%s,%s,,,,,,"
+			, localtime
+			, BaseIDTOString(data[0])
+			, bitsUsed
+			, (unsigned long long) time
+			, str1
+			, str2
+	);
 	AddToLog(str);
 }
 void PacketLogger::OnInternalPacket(InternalPacket *internalPacket, unsigned frameNumber, SystemAddress remoteSystemAddress, RakNet::TimeMS time, int isSend)
@@ -242,13 +242,13 @@ void PacketLogger::WriteMiscellaneous(const char *type, const char *msg)
 	char localtime[128];
 	GetLocalTime(localtime);
 
-	sprintf(str, "%s,Lcl,%s,,,,,%" PRINTF_64_BIT_MODIFIER "u,%s,,,,,,,%s"
-					, localtime
-					, type
-					, (unsigned long long) time
-					, str1
-					, msg
-					);
+	snprintf(str, 1024, "%s,Lcl,%s,,,,,%" PRINTF_64_BIT_MODIFIER "u,%s,,,,,,,%s"
+			, localtime
+			, type
+			, (unsigned long long) time
+			, str1
+			, msg
+	);
 
 	AddToLog(msg);
 }
